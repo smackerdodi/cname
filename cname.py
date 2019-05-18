@@ -4,12 +4,12 @@ import queue
 import threading
 
 import dns.resolver
-import win_unicode_console
 from colorama import Fore, Style, init
 
 
 #enable coloring on win
 try:
+	import win_unicode_console
 	win_unicode_console.enable()
 	init()
 except:
