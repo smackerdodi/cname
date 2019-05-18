@@ -7,6 +7,14 @@ import dns.resolver
 import win_unicode_console
 from colorama import Fore, Style, init
 
+
+#enable coloring on win
+try:
+	win_unicode_console.enable()
+	init()
+except:
+	pass
+
 #introduction
 print(Fore.WHITE + '''/
                           _                _           _ _ 
@@ -21,14 +29,6 @@ print (Fore.RED + 'PREPARING FOR BEGIN SCRIPT')
 for i in range(5,0,-1):
     time.sleep(1)
 print(str(i) + i * " . ")
-
-
-#enable coloring on win
-try:
-	win_unicode_console.enable()
-	init()
-except:
-	pass
 
 #queue and lock var
 domains = queue.Queue()
@@ -63,7 +63,13 @@ def Check(domain):
 
 #starting threads
 while not domains.empty():
-	threading.Thread(target=Check,args=(domains.get(),)).start()
+	try:
+		domain = domains.get()
+		threading.Thread(target=Check,args=(domain,)).start()
+	#avoid thread start error
+	except RuntimeError:
+		domains.task_done()
+		domains.put(domain)
 
 #wait until all threads done
 domains.join()
