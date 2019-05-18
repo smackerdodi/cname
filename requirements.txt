@@ -3,4 +3,4 @@ dns
 colorama
 time
 colorama
-requests.
+requests
