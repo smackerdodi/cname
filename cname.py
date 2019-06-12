@@ -63,8 +63,8 @@ def Check(domain):
 
 #starting threads
 while not domains.empty():
+	domain = domains.get()
 	try:
-		domain = domains.get()
 		threading.Thread(target=Check,args=(domain,)).start()
 	#avoid thread start error
 	except RuntimeError:
