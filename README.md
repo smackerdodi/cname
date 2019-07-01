@@ -6,7 +6,7 @@ this tool take a list of subdomain and get cname for every subdomain . it is ver
 ## Install :-
 ==============
 
-1. git clone https://github.com/smackerdodi/cname 
+1. git clone https://github.com/smackerdodi/cname.git 
 2. pip3 install -r requirements.txt
 
 ## Usage :-
