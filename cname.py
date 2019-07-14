@@ -15,28 +15,16 @@ try:
 except:
 	pass
 
-#introduction
-print(Fore.WHITE + '''/
-                          _                _           _ _ 
- ___ _ __ ___   __ _  ___| | _____ _ __ __| | ___   __| (_)
-/ __| '_ ` _ \ / _` |/ __| |/ / _ \ '__/ _` |/ _ \ / _` | |
-\__ \ | | | | | (_| | (__|   <  __/ | | (_| | (_) | (_| | |
-|___/_| |_| |_|\__,_|\___|_|\_\___|_|  \__,_|\___/ \__,_|_|
-''')
-print(Fore.GREEN + '''/              CODED BY : DAOUD YOUSSEF          
-''')                                              
-print (Fore.RED + 'PREPARING FOR BEGIN SCRIPT')
-for i in range(5,0,-1):
-    time.sleep(1)
-print(str(i) + i * " . ")
-
 #queue and lock var
 domains = queue.Queue()
 lock = threading.Lock()
 
 # reading file
 sublist = sys.argv[1]
-subfile = open(sublist, 'r')
+try:
+	subfile = open(sublist, 'r')
+except:
+	subfile = sublist.split(",")
 
 #setting dns resolver
 my_resolver = dns.resolver.Resolver()
@@ -46,7 +34,10 @@ my_resolver.nameservers = ['8.8.8.8']
 for sub in subfile:
 	domains.put(sub.strip())
 
-subfile.close()
+try:
+	subfile.close()
+except:
+	pass
 
 #checking cname
 def Check(domain):
@@ -54,11 +45,9 @@ def Check(domain):
 		answer=my_resolver.query(domain, 'CNAME')
 		for data in answer:
 			with lock:
-				print(Fore.WHITE + (domain))
-				print(Fore.GREEN +'C_NAME is :'+ Fore.YELLOW + str(data))
+				print(Fore.WHITE + domain + Fore.GREEN +' --> '+ Fore.YELLOW + str(data))
 	except:
-		with lock:
-			print(Fore.WHITE + (domain) + Fore.RED + (' has no cname'))
+		pass
 	domains.task_done()
 
 #starting threads

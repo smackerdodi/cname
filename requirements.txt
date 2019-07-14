@@ -1,6 +1,2 @@
-sys
-dns
-colorama
-time
 colorama
 requests
